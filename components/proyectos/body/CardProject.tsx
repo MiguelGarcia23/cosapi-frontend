@@ -1,30 +1,29 @@
-import { FC } from 'react';
-import { useRouter } from 'next/router';
+import { FC, useEffect } from 'react';
 
 import { Card, CardActionArea, CardContent, CardMedia, Typography, Grid } from '@mui/material';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-import styles from './Gallery.module.css';
+import styles from './Body.module.css';
 
 interface Props {
-    img: string;
-    alt: string;
-    year: string;
-    title: string;
+    img: string,
+    alt: string,
+    year: string,
+    title: string
 }
 
-export const CardGallery: FC<Props> = ({ img, alt, year, title }) => {
+export const CardProject: FC<Props> = ({ img, alt, year, title }) => {
 
-    const router = useRouter();
-
-    const handleClick = (): void => {
-        router.push(`/proyectos/${ title.toLowerCase() }`)
-    }
+    useEffect(() => {
+        AOS.init({ duration: 2000 })
+    }, [])
 
     return (
         
-        <Grid item sm={ 12 } lg={ 6 }>
+        <Grid item sm={ 12 } lg={ 6 } data-aos='zoom-out'>
 
-            <Card className={ styles['gallery-home-project'] } onClick={ handleClick }>
+            <Card className={ styles['projects-card'] }>
                 <CardActionArea sx={{ position: 'relative' }}>
 
                     <CardMedia
@@ -33,7 +32,7 @@ export const CardGallery: FC<Props> = ({ img, alt, year, title }) => {
                         alt={ alt }
                     />
 
-                    <CardContent className={ styles['gallery-home-project-info'] }>
+                    <CardContent className={ styles['projects-card-info'] }>
                         <Typography variant='body1' color="info.main">{ year }</Typography>
                         <Typography variant='h3' color="info.main">{ title }</Typography>
                     </CardContent>
