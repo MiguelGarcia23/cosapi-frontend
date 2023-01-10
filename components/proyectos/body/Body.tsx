@@ -2,18 +2,23 @@ import { FC } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 
+import { Project } from '../../../interfaces';
 import { CardProject } from './CardProject';
 
 import styles from './Body.module.css';
 
+interface Props {
+    projects: Project[];
+}
 
-export const BodyProjects: FC = () => {
+
+export const BodyProjects: FC<Props> = ({ projects }) => {
 
     return (
 
         <Box className={ styles['projects-body'] }>
 
-            <Box sx={{ marginBottom: '3.75rem' }}>
+            {/* <Box sx={{ marginBottom: '3.75rem' }}>
                 <Typography variant='h4' color='info.dark' fontWeight={ 500 }>
                     Nuestros
                 </Typography>
@@ -21,11 +26,25 @@ export const BodyProjects: FC = () => {
                 <Typography variant='h2' color='info.dark' sx={{ textAlign: 'left', marginBottom: '3.75rem' }}>
                     Proyectos
                 </Typography>
-            </Box>
+            </Box> */}
 
             <Grid container spacing={ 2 }>
 
-                <CardProject 
+                {
+                    projects.map( ({ id, name, year, image_project }) => {
+                        return (
+                            <CardProject
+                                key={ id } 
+                                img={ image_project }
+                                alt={`Imagen de ${ name }`}
+                                year={ year.toString() }
+                                title={ name }
+                            />
+                        )
+                    })
+                }
+
+                {/* <CardProject 
                     img='/petromonagas.png'
                     alt='Imagen de Petromonagas'
                     year='2020'
@@ -58,7 +77,7 @@ export const BodyProjects: FC = () => {
                     alt='Imagen de PDVSA'
                     year='2021'
                     title='PDVSA'
-                />
+                /> */}
 
             </Grid>
 
@@ -67,3 +86,16 @@ export const BodyProjects: FC = () => {
 
     )
 }
+
+/* export const getStaticProps: GetStaticProps = async (ctx) => {
+
+    const { data } = await backend.get<ProjectListResponse>('/proyectos');
+
+    const projects: Project[] = data.projects;
+
+    return {
+      props: {
+        projects
+      }
+    }
+} */
